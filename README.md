@@ -1,2 +1,2 @@
 # django-social-network
-social network projeckt using django framework
+social network project using django
