@@ -1,4 +1,3 @@
-from typing import Any
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -31,3 +30,7 @@ class UserRegistrationForm(forms.Form):
         if p1 and p2 and p1 != p2:
             raise ValidationError("passwords do not match.")
         print(cd.get("username"), cd.get("email"), cd.get("password1"))
+
+class UserLoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Username'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'Password'}))
