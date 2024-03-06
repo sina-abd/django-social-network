@@ -8,7 +8,7 @@ from django.utils.text import slugify
 
 class HomeView(View):
     def get(self, request):
-        posts = Post.objects.all()
+        posts = Post.objects.order_by('-created')
         return render(request, 'home/index.html', {'posts':posts})
     
 class PostDetailView(View):
