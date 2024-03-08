@@ -13,7 +13,7 @@
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="send">
-        </form>
+        </form> <br/>
     {% else %}
         <p class="alert alert-danger"> only users can comment.</p>
     {% endif %}
@@ -22,7 +22,19 @@
         <div class="card bg-dark text-white">
             <p class="card-header">{{ comment.user }} | {{ comment.created|timesince }} ago </p>
             <p class="card-body">{{ comment.body }}</p>
-        </div>
+            {% if request.user.is_authenticated %}
+                <form action="{% url 'home:add_reply' post.id comment.id %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="send">
+                </form> <br/>
+            {% endif %}
+            {% with replies=comment.rcomments.all %}
+                {% for reply in replies %}
+                    <p class="bg-primary p-3 m-2">{{ reply.user }} <br/> {{ reply.body }} </p>
+                {% endfor %}
+            {% endwith %}
+        </div><br/>
     {% empty %}
         <p> No comments yet, be the first to comment! </p>
     {% endfor %}
